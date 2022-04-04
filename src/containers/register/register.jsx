@@ -11,6 +11,7 @@ import {
 } from "antd-mobile";
 
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { register } from "../../redux/actions";
 
 import Logo from "../../components/logo/logo";
@@ -42,6 +43,10 @@ class Register extends Component {
 
   render() {
     const { type } = this.state;
+    const { msg, redirectTo } = this.props.user;
+    if (redirectTo) {
+      return <Redirect to={redirectTo} />;
+    }
 
     return (
       <div>
@@ -49,6 +54,8 @@ class Register extends Component {
           <NavBar>RECRUIT</NavBar>
           <WhiteSpace />
           <Logo />
+          <WhiteSpace />
+          {msg ? <p className="error-msg">{msg}</p> : null}
           <WhiteSpace />
           <List>
             <WhiteSpace />
@@ -113,4 +120,6 @@ class Register extends Component {
   }
 }
 
-export default connect((state) => ({}), { register })(Register);
+export default connect((state) => ({ user: state.user }), { register })(
+  Register
+);

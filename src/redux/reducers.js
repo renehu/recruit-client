@@ -5,12 +5,13 @@ const initUser = {
   username: "",
   type: "",
   msg: "", // error msg
+  redirectTo: "",
 };
 
 function user(state = initUser, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
-      return { ...state, ...action.data };
+      return { ...action.data, redirectTo: "/" };
     case ERROR_MSG:
       return { ...state, msg: action.data };
     default:
