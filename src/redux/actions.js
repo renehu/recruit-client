@@ -19,6 +19,15 @@ const errorMsg = (msg) => ({
 // async actions
 // register async action
 export const register = (user) => {
+  const { username, password, confirmPassword, type } = user;
+
+  if (password !== confirmPassword) {
+    // error msg sync action
+    return errorMsg("The two passwords you entered did not match.");
+  } else if (!username) {
+    return errorMsg("The user name cannot be empty");
+  }
+
   return async (dispatch) => {
     //   const promise = reqRegister(user);
     //   promise.then(response=>{
@@ -26,7 +35,7 @@ export const register = (user) => {
     //   })
     const response = await reqRegister(user);
     const result = response.data;
-    if (result?.code === 0) {
+    if (result.code === 0) {
       dispatch(authSuccess(result.data));
     } else {
       dispatch(errorMsg(result.msg));
@@ -36,10 +45,17 @@ export const register = (user) => {
 
 // login async action
 export const login = (user) => {
+  const { username, password } = user;
+  if (!username) {
+    // error msg sync action
+    return errorMsg("Username cannot be empty.");
+  } else if (!password) {
+    return errorMsg("Password cannot be empty.");
+  }
   return async (dispatch) => {
     const response = await reqLogin(user);
     const result = response.data;
-    if (result?.code === 0) {
+    if (result.code === 0) {
       dispatch(authSuccess(result.data));
     } else {
       dispatch(errorMsg(result.msg));
