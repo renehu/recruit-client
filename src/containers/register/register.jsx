@@ -90,6 +90,7 @@ class Register extends Component {
             <WhiteSpace />
             <ListItem>
               <span>User Type</span>
+              &nbsp;&nbsp;&nbsp;
               <Radio
                 onChange={() => {
                   this.handleChange("type", "employee");
