@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { NavBar, InputItem, TextareaItem, Button } from "antd-mobile";
 
 import AvatarSelect from "../../components/avatar-select/avatar-select";
