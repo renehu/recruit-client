@@ -5,17 +5,43 @@ import { NavBar, InputItem, TextareaItem, Button } from "antd-mobile";
 import AvatarSelect from "../../components/avatar-select/avatar-select";
 
 class EmployerInfo extends Component {
-  emplyerInfo() {}
+
+  state={
+    avatar:'',
+    position:'',
+    company:'',
+    salary:'',
+    location:'',
+    info:''
+  }
+
+  setAvatar=(avatar)=>{
+    this.setState({
+      avatar:avatar
+    })
+  }
+
+  handleChange=(name,value)=>{
+    this.setState({
+      [name]:value
+    })
+  }
+
+  save=()=>{
+    
+  }
+
   render() {
     return (
       <div>
         <NavBar>Employer Info</NavBar>
-        <AvatarSelect />
-        <InputItem>Position:</InputItem>
-        <InputItem>Company:</InputItem>
-        <InputItem>Salary:</InputItem>
-        <TextareaItem title="Qualifications" rows={5}></TextareaItem>
-        <Button type="primary">Submit</Button>
+        <AvatarSelect setAvatar={this.setAvatar}/>
+        <InputItem onChange={val=>{this.handleChange('position',val)}}>Position:</InputItem>
+        <InputItem onChange={val=>this.handleChange('company',val)}>Company:</InputItem>
+        <InputItem onChange={val=>this.handleChange('salary',val)}>Salary:</InputItem>
+        <InputItem onChange={val=>this.handleChange('location',val)}>Location:</InputItem>
+        <TextareaItem title="Qualifications" rows={5} onchange={val=>this.handleChange('info',val)}></TextareaItem>
+        <Button type="primary" onClick={this.save}>Submit</Button>
       </div>
     );
   }
