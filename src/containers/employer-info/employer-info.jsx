@@ -40,7 +40,7 @@ class EmployerInfo extends Component {
         <InputItem onChange={val=>this.handleChange('company',val)}>Company:</InputItem>
         <InputItem onChange={val=>this.handleChange('salary',val)}>Salary:</InputItem>
         <InputItem onChange={val=>this.handleChange('location',val)}>Location:</InputItem>
-        <TextareaItem title="Qualifications" rows={5} onchange={val=>this.handleChange('info',val)}></TextareaItem>
+        <TextareaItem title="Qualifications" rows={5} onChange={val=>this.handleChange('info',val)}></TextareaItem>
         <Button type="primary" onClick={this.save}>Submit</Button>
       </div>
     );
