@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavBar, InputItem, TextareaItem, Button } from "antd-mobile";
+import { update } from "../../redux/actions";
 
 import AvatarSelect from "../../components/avatar-select/avatar-select";
 
@@ -24,6 +25,10 @@ class EmployeeInfo extends Component {
     })
   }
 
+  save = () => {
+    this.props.update(this.state)
+  }
+
   render() {
     return (
       <div>
@@ -38,4 +43,4 @@ class EmployeeInfo extends Component {
   }
 }
 
-export default connect((state) => ({}), {})(EmployeeInfo);
+export default connect((state) => ({user:state.user}), {update})(EmployeeInfo);

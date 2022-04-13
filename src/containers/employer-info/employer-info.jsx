@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, InputItem, TextareaItem, Button } from "antd-mobile";
 
 import AvatarSelect from "../../components/avatar-select/avatar-select";
+import { update } from "../../redux/actions";
 
 class EmployerInfo extends Component {
 
@@ -27,8 +28,8 @@ class EmployerInfo extends Component {
     })
   }
 
-  save=()=>{
-    
+  save = () => {
+    this.props.update(this.state)
   }
 
   render() {
@@ -47,4 +48,4 @@ class EmployerInfo extends Component {
   }
 }
 
-export default connect((state) => ({}), {})(EmployerInfo);
+export default connect((state) => ({user:state.user}), {update})(EmployerInfo);

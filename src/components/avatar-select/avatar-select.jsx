@@ -34,7 +34,7 @@ export default class AvatarSelect extends Component {
   render() {
     const {icon} = this.state;
 
-    const listAvatar = icon ? (<div>Selected avatar: <img src={icon} style={{maxWidth:100+'px'}}/></div>) 
+    const listAvatar = icon ? (<div>Selected avatar: <img src={icon} style={{maxWidth:100+'px'}} alt='avatar'/></div>) 
                             : "Please select your avatar";
 
     return (
@@ -46,7 +46,7 @@ export default class AvatarSelect extends Component {
         <h6>
           <a
             href="https://www.freepik.com/vectors/job-opportunity"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
           >
             Avatar images created by studiogstock - www.freepik.com
           </a>

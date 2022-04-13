@@ -26,10 +26,6 @@ class Register extends Component {
     type: "employee",
   };
 
-  register = () => {
-    //console.log(this.state);
-    this.props.register(this.state);
-  };
 
   handleChange = (item, value) => {
     this.setState({
@@ -40,6 +36,12 @@ class Register extends Component {
   gotoLogin = () => {
     this.props.history.replace("/login");
   };
+
+  register = () => {
+    //console.log(this.state);
+    this.props.register(this.state);
+  };
+
 
   render() {
     const { type } = this.state;

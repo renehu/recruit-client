@@ -1,4 +1,4 @@
-import { reqRegister, reqLogin } from "../api";
+import { reqRegister, reqLogin, reqUpdateUser } from "../api";
 import { AUTH_SUCCESS, ERROR_MSG } from "./action-types";
 
 // dispatch actions
@@ -19,7 +19,7 @@ const errorMsg = (msg) => ({
 // async actions
 // register async action
 export const register = (user) => {
-  const { username, password, confirmPassword, type } = user;
+  const { username, password, confirmPassword } = user;
 
   if (password !== confirmPassword) {
     // error msg sync action
@@ -59,6 +59,21 @@ export const login = (user) => {
     const response = await reqLogin(user);
     const result = response.data;
 
+    if (result.code === 0) {
+      dispatch(authSuccess(result.data));
+    } else {
+      dispatch(errorMsg(result.msg));
+    }
+  };
+};
+
+// update user info async action
+export const update = (newUser) => {
+  const user = newUser;
+
+  return async (dispatch) => {
+    const response = await reqUpdateUser(user);
+    const result = response.data;
     if (result.code === 0) {
       dispatch(authSuccess(result.data));
     } else {
