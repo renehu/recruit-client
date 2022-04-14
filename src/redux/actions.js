@@ -22,7 +22,7 @@ const errorMsg = (msg) => ({
 });
 
 const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
-const resetUser = (msg) => ({ type: ERROR_MSG, data: msg });
+const resetUser = (msg) => ({ type: RESET_USER, data: msg });
 
 // ASYNC ACTIONS
 // register async action

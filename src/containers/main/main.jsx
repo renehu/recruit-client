@@ -1,12 +1,19 @@
 // main router component
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import EmployeeInfo from "../employee-info/employee-info";
 import EmployerInfo from "../employer-info/employer-info";
 
-export default class Main extends Component {
+class Main extends Component {
   render() {
+    const { user } = this.props;
+    // redirect to login if no cookie
+    if (!user._id) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <div>
         <Switch>
@@ -17,3 +24,5 @@ export default class Main extends Component {
     );
   }
 }
+
+export default connect((state) => ({ user: state.user }))(Main);
