@@ -1,9 +1,14 @@
 import { reqRegister, reqLogin, reqUpdateUser } from "../api";
-import { AUTH_SUCCESS, ERROR_MSG } from "./action-types";
+import {
+  AUTH_SUCCESS,
+  ERROR_MSG,
+  USER_RECEIVED,
+  RESET_USER,
+} from "./action-types";
 
 // dispatch actions
 
-// sync actions
+// SYNC ACTIONS
 // auth success sync action
 const authSuccess = (user) => ({
   type: AUTH_SUCCESS,
@@ -16,7 +21,10 @@ const errorMsg = (msg) => ({
   data: msg,
 });
 
-// async actions
+const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
+const resetUser = (msg) => ({ type: ERROR_MSG, data: msg });
+
+// ASYNC ACTIONS
 // register async action
 export const register = (user) => {
   const { username, password, confirmPassword } = user;
@@ -68,16 +76,14 @@ export const login = (user) => {
 };
 
 // update user info async action
-export const update = (newUser) => {
-  const user = newUser;
-
+export const updateUser = (user) => {
   return async (dispatch) => {
     const response = await reqUpdateUser(user);
     const result = response.data;
     if (result.code === 0) {
-      dispatch(authSuccess(result.data));
+      dispatch(userReceived(result.data));
     } else {
-      dispatch(errorMsg(result.msg));
+      dispatch(resetUser(result.msg));
     }
   };
 };

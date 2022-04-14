@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
-import { AUTH_SUCCESS, ERROR_MSG } from "./action-types";
+import {
+  AUTH_SUCCESS,
+  ERROR_MSG,
+  USER_RECEIVED,
+  RESET_USER,
+} from "./action-types";
 import { getRedirectUrl } from "../utils";
 
 const initUser = {
@@ -14,8 +19,18 @@ function user(state = initUser, action) {
     case AUTH_SUCCESS:
       const { type, avatar } = action.data;
       return { ...action.data, redirectTo: getRedirectUrl(type, avatar) };
+
     case ERROR_MSG:
       return { ...state, msg: action.data };
+
+    //update user info success:
+    case USER_RECEIVED:
+      return action.data;
+
+    //update user info error:
+    case RESET_USER:
+      return { ...initUser, msg: action.data };
+
     default:
       return state;
   }
