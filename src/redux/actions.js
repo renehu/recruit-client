@@ -1,10 +1,5 @@
-import { reqRegister, reqLogin, reqUpdateUser } from "../api";
-import {
-  AUTH_SUCCESS,
-  ERROR_MSG,
-  USER_RECEIVED,
-  RESET_USER,
-} from "./action-types";
+import { reqRegister, reqLogin, reqUpdateUser, reqUser } from '../api';
+import { AUTH_SUCCESS, ERROR_MSG, USER_RECEIVED, RESET_USER } from './action-types';
 
 // dispatch actions
 
@@ -12,13 +7,13 @@ import {
 // auth success sync action
 const authSuccess = (user) => ({
   type: AUTH_SUCCESS,
-  data: user,
+  data: user
 });
 
 // error msg sync action
 const errorMsg = (msg) => ({
   type: ERROR_MSG,
-  data: msg,
+  data: msg
 });
 
 const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
@@ -31,9 +26,9 @@ export const register = (user) => {
 
   if (password !== confirmPassword) {
     // error msg sync action
-    return errorMsg("The two passwords you entered did not match.");
+    return errorMsg('The two passwords you entered did not match.');
   } else if (!username) {
-    return errorMsg("The user name cannot be empty");
+    return errorMsg('The user name cannot be empty');
   }
 
   return async (dispatch) => {
@@ -58,9 +53,9 @@ export const login = (user) => {
 
   if (!username) {
     // error msg sync action
-    return errorMsg("Username cannot be empty.");
+    return errorMsg('Username cannot be empty.');
   } else if (!password) {
-    return errorMsg("Password cannot be empty.");
+    return errorMsg('Password cannot be empty.');
   }
 
   return async (dispatch) => {
@@ -80,6 +75,20 @@ export const updateUser = (user) => {
   return async (dispatch) => {
     const response = await reqUpdateUser(user);
     const result = response.data;
+    if (result.code === 0) {
+      dispatch(userReceived(result.data));
+    } else {
+      dispatch(resetUser(result.msg));
+    }
+  };
+};
+
+// get user data
+export const getUser = () => {
+  return async (dispatch) => {
+    const response = await reqUser();
+    const result = response.data;
+
     if (result.code === 0) {
       dispatch(userReceived(result.data));
     } else {
