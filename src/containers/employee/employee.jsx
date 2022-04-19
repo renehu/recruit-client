@@ -1,7 +1,9 @@
-import Cookies from 'js-cookie';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-export default class Employee extends Component {
+import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
+import { Button } from 'antd-mobile';
+
+class Employee extends Component {
   logout = () => {
     Cookies.remove('userid');
   };
@@ -9,10 +11,12 @@ export default class Employee extends Component {
   render() {
     return (
       <div>
-        Employee Dashboard
+        <h2>Employee Dashboard</h2>
         <br />
-        <button onClick={this.logout}>Logout</button>
+        <Button onClick={() => this.props.history.replace('/login')}>Logout</Button>
       </div>
     );
   }
 }
+
+export default connect((state) => ({}), {})(Employee);
