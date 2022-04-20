@@ -11,7 +11,9 @@ class FooterTabBar extends React.Component {
   };
 
   render() {
-    const { navList } = this.props;
+    let { navList } = this.props;
+    navList = navList.filter((nav) => !nav.hide);
+
     const pathname = this.props.location.pathname;
 
     return (

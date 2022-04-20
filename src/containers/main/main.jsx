@@ -78,9 +78,17 @@ class Main extends Component {
       }
     }
 
-    const navList = this.navList;
+    let navList = this.navList;
     const path = this.props.location.pathname;
     const nav = navList.find((nav) => nav.path === path);
+
+    if (nav) {
+      if (user.type === 'employer') {
+        navList[1].hide = true;
+      } else {
+        navList[0].hide = true;
+      }
+    }
 
     return (
       <div>
