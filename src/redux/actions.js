@@ -17,7 +17,7 @@ const errorMsg = (msg) => ({
 });
 
 const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
-const resetUser = (msg) => ({ type: RESET_USER, data: msg });
+export const resetUser = (msg) => ({ type: RESET_USER, data: msg });
 
 // ASYNC ACTIONS
 // register async action

@@ -84,6 +84,7 @@ class Main extends Component {
 
     if (nav) {
       if (user.type === 'employer') {
+        // hide the employee menu if employer login
         navList[1].hide = true;
       } else {
         navList[0].hide = true;
