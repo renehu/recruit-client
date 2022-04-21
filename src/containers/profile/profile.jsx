@@ -36,9 +36,9 @@ class Profile extends Component {
 
         <List renderHeader={() => 'Related Information'}>
           <Item multipleLine>
-            <Brief>Position: {position}</Brief>
+            <Brief>Job title: {position}</Brief>
             <Brief>Location: {location}</Brief>
-            <Brief>Info: {info}</Brief>
+            <Brief>Description: {info}</Brief>
             {salary ? <Brief>Salary: {salary}</Brief> : null}
           </Item>
         </List>

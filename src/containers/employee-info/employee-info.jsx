@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { NavBar, InputItem, TextareaItem, Button } from "antd-mobile";
-import { updateUser } from "../../redux/actions";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { NavBar, InputItem, TextareaItem, Button } from 'antd-mobile';
+import { updateUser } from '../../redux/actions';
 
-import AvatarSelect from "../../components/avatar-select/avatar-select";
+import AvatarSelect from '../../components/avatar-select/avatar-select';
 
 class EmployeeInfo extends Component {
   state = {
-    avatar: "",
-    position: "",
-    location: "",
-    info: "",
+    avatar: '',
+    position: '',
+    location: '',
+    info: ''
   };
 
   setAvatar = (avatar) => {
     this.setState({
-      avatar: avatar,
+      avatar: avatar
     });
   };
 
   handleChange = (name, value) => {
     this.setState({
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -34,7 +34,7 @@ class EmployeeInfo extends Component {
     // if employees have set avatar, redirect to employee page
     const { avatar, type } = this.props.user;
     if (avatar) {
-      const url = type === "employer" ? "employer" : "employee";
+      const url = type === 'employer' ? 'employer' : 'employee';
       return <Redirect to={url} />;
     }
 
@@ -44,19 +44,15 @@ class EmployeeInfo extends Component {
         <AvatarSelect setAvatar={this.setAvatar} />
         <InputItem
           onChange={(val) => {
-            this.handleChange("position", val);
-          }}
-        >
-          Position:
+            this.handleChange('position', val);
+          }}>
+          Job title:
         </InputItem>
-        <InputItem onChange={(val) => this.handleChange("location", val)}>
-          Location:
-        </InputItem>
+        <InputItem onChange={(val) => this.handleChange('location', val)}>Location:</InputItem>
         <TextareaItem
-          title="Bio:"
+          title="Description:"
           rows={5}
-          onChange={(val) => this.handleChange("info", val)}
-        ></TextareaItem>
+          onChange={(val) => this.handleChange('info', val)}></TextareaItem>
         <Button type="primary" onClick={this.save}>
           Submit
         </Button>
@@ -65,6 +61,4 @@ class EmployeeInfo extends Component {
   }
 }
 
-export default connect((state) => ({ user: state.user }), { updateUser })(
-  EmployeeInfo
-);
+export default connect((state) => ({ user: state.user }), { updateUser })(EmployeeInfo);

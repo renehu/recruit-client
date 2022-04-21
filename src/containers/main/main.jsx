@@ -97,7 +97,7 @@ class Main extends Component {
 
         <Switch>
           {navList.map((nav) => (
-            <Route path={nav.path} component={nav.component} />
+            <Route key={nav.path} path={nav.path} component={nav.component} />
           ))}
           <Route path="/employee-info" component={EmployeeInfo} />
           <Route path="/employer-info" component={EmployerInfo} />

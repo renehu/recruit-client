@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Cookies from 'js-cookie';
-import { Button } from 'antd-mobile';
+import { getUserList } from '../../redux/actions';
+import UserList from '../../components/user-list/user_list';
 
 class Employee extends Component {
+  // on init
+  componentDidMount() {
+    this.props.getUserList('employer');
+  }
+
   render() {
     return (
       <div>
-        <h2>Employee Dashboard</h2>
+        <UserList userList={this.props.userList} />
       </div>
     );
   }
 }
 
-export default connect((state) => ({}), {})(Employee);
+export default connect((state) => ({ userList: state.userList }), { getUserList })(Employee);
