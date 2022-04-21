@@ -13,15 +13,20 @@ export default class UserList extends React.Component {
     const { userList } = this.props;
 
     return (
-      <WingBlank>
+      <WingBlank style={{ marginBottom: 50 }}>
         {userList.map((user) => (
           <div key={user._id}>
             <WhiteSpace />
             <Card>
-              <Header
-                thumb={require(`../../assets/images/${user.avatar}.jpg`)}
-                extra={user.username}
-              />
+              {user.avatar ? (
+                <Header
+                  thumb={require(`../../assets/images/${user.avatar}.jpg`)}
+                  extra={user.username}
+                />
+              ) : (
+                <Header thumb={require(`../../assets/images/default.jpg`)} extra={user.username} />
+              )}
+
               <Body>
                 <div>Job title: {user.position}</div>
                 {user.company ? <div>Company: {user.company}</div> : null}
