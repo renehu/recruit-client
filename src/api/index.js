@@ -2,6 +2,7 @@
 
 import ajax from './ajax';
 
+/* User */
 // user register
 export const reqRegister = (user) => ajax('/api/register', user, 'POST');
 
@@ -17,3 +18,11 @@ export const reqUser = () => ajax('/api/user');
 
 // GET method for get user list
 export const reqUserList = (type) => ajax('/api/userlist', { type });
+
+/* Chat */
+export const reqSendMsg = (data) => ajax('/api/sendmsg', data, 'POST');
+
+export const reqMsgList = () => ajax('/api/msglist');
+
+// mark msg read
+export const reqMsgRead = (from) => ajax('/api/msgread', { from }, 'POST');

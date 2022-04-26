@@ -15,6 +15,7 @@ import Message from '../message/message';
 import Profile from '../profile/profile';
 import NotFound from '../../components/not-found/not-found';
 import FooterTabBar from '../../components/footer-tab-bar/footer-tab-bar';
+import Chat from '../chat/chat';
 
 class Main extends Component {
   navList = [
@@ -101,6 +102,7 @@ class Main extends Component {
           ))}
           <Route path="/employee-info" component={EmployeeInfo} />
           <Route path="/employer-info" component={EmployerInfo} />
+          <Route path="/chat/:userid" component={Chat} />
           <Route component={NotFound} />
         </Switch>
 

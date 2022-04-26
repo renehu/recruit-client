@@ -4,7 +4,9 @@ import {
   ERROR_MSG,
   USER_RECEIVED,
   RESET_USER,
-  USER_LIST_RECEIVED
+  USER_LIST_RECEIVED,
+  MSG_RECEIVED,
+  MSG_LIST_RECEIVED
 } from './action-types';
 import { getRedirectUrl } from '../utils';
 
@@ -49,5 +51,27 @@ function userList(state = initUserList, action) {
   }
 }
 
-export default combineReducers({ user, userList });
-// exposed property structure: {user:{}, userList:[]}
+/* Chat */
+const initChat = {
+  users: {},
+  chatMsgs: [],
+  unReadMsgCount: 0
+};
+function chat(state = initChat, action) {
+  switch (action.type) {
+    case MSG_LIST_RECEIVED:
+      const { users, chatMsgs } = action.data;
+      const unReadMsgCount = chatMsgs.filter((i) => !i.read).length;
+
+      return { users, chatMsgs, unReadMsgCount };
+
+    case MSG_RECEIVED:
+      return action.data;
+      break;
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ user, userList, chat });
+// exposed property structure: {user:{}, userList:[], chat：{}}
