@@ -20,7 +20,7 @@ export const reqUser = () => ajax('/api/user');
 export const reqUserList = (type) => ajax('/api/userlist', { type });
 
 /* Chat */
-export const reqSendMsg = (data) => ajax('/api/sendmsg', data, 'POST');
+//export const reqSendMsg = (data) => ajax('/api/sendmsg', data, 'POST');
 
 export const reqMsgList = () => ajax('/api/msglist');
 

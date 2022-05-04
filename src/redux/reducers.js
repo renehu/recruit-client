@@ -17,6 +17,7 @@ const initUser = {
   msg: '', // error msg
   redirectTo: ''
 };
+
 function user(state = initUser, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
@@ -41,6 +42,7 @@ function user(state = initUser, action) {
 
 // userList
 const initUserList = [];
+
 function userList(state = initUserList, action) {
   switch (action.type) {
     case USER_LIST_RECEIVED:
@@ -57,17 +59,23 @@ const initChat = {
   chatMsgs: [],
   unReadMsgCount: 0
 };
+
 function chat(state = initChat, action) {
   switch (action.type) {
     case MSG_LIST_RECEIVED:
       const { users, chatMsgs } = action.data;
       const unReadMsgCount = chatMsgs.filter((i) => !i.read).length;
 
-      return { users, chatMsgs, unReadMsgCount };
+      return { users, chatMsgs, unReadMsgCount: 0 };
 
     case MSG_RECEIVED:
-      return action.data;
-      break;
+      const chatMsg = action.data;
+      return {
+        users: state.users,
+        chatMsgs: [...state.chatMsgs, chatMsg],
+        unReadMsgCount: 0
+      };
+
     default:
       return state;
   }

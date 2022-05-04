@@ -1,3 +1,4 @@
+import { func } from 'prop-types';
 import io from 'socket.io-client';
 
 import {
@@ -39,13 +40,16 @@ const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
 
 export const resetUser = (msg) => ({ type: RESET_USER, data: msg });
 
-export const userListReceived = (userList) => ({ type: USER_LIST_RECEIVED, data: userList });
+const userListReceived = (userList) => ({ type: USER_LIST_RECEIVED, data: userList });
 
 // chat msg sync action
-export const msgListReceived = ({ users, chatMsgs }) => ({
+const msgListReceived = ({ users, chatMsgs }) => ({
   type: MSG_LIST_RECEIVED,
   data: { users, chatMsgs }
 });
+
+// receive singal msg
+const msgReceived = (chatMsg) => ({ type: MSG_RECEIVED, data: chatMsg });
 
 /*  ---ASYNC ACTIONS--- 
   1) ajax 
@@ -72,7 +76,7 @@ export const register = (user) => {
     const result = response.data;
 
     if (result.code === 0) {
-      getMsgList(dispatch); // get msg list when register succeeds
+      getMsgList(dispatch, result.data._id); // get msg list when register succeeds
       dispatch(authSuccess(result.data));
     } else {
       dispatch(errorMsg(result.msg));
@@ -96,7 +100,7 @@ export const login = (user) => {
     const result = response.data;
 
     if (result.code === 0) {
-      getMsgList(dispatch); //get msg list when login succeeds
+      getMsgList(dispatch, result.data._id); //get msg list when login succeeds
       dispatch(authSuccess(result.data));
     } else {
       dispatch(errorMsg(result.msg));
@@ -124,7 +128,7 @@ export const getUser = () => {
     const result = response.data;
 
     if (result.code === 0) {
-      getMsgList(dispatch); //get msg list when auto-login succeeds
+      getMsgList(dispatch, result.data._id); //get msg list when auto-login succeeds
       dispatch(userReceived(result.data));
     } else {
       dispatch(resetUser(result.msg));
@@ -145,8 +149,8 @@ export const getUserList = (type) => {
 };
 
 /* Chat */
-async function getMsgList(dispatch) {
-  initIO(); //initIO monitor when get msg list
+async function getMsgList(dispatch, userid) {
+  initIO(dispatch, userid); //initIO monitor when get msg list
 
   const response = await reqMsgList();
   const result = response.data;
@@ -157,11 +161,21 @@ async function getMsgList(dispatch) {
   }
 }
 
-function initIO() {
+function initIO(dispatch, userid) {
   if (!io.socket) {
-    io.socket = io('ws://localhost:4000');
+    io.socket = io('wss://renego.live:4000');
+
+    io.socket.on('connect_error', (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
+
     io.socket.on('receiveMsg', function (chatMsg) {
-      console.log('client get msg from server', chatMsg);
+      console.log('Client got msg from server', chatMsg);
+
+      // only chatMsg related to current user, then dispatch sync action to save msg
+      if (userid == chatMsg.from || userid == chatMsg.to) {
+        dispatch(msgReceived(chatMsg));
+      }
     });
   }
 }
