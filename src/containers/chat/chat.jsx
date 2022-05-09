@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavBar, List, InputItem } from 'antd-mobile';
+import { NavBar, List, InputItem, Grid } from 'antd-mobile';
 import { sendMsg } from '../../redux/actions';
 
 const Item = List.Item;
 
 class Chat extends Component {
   state = {
-    content: ''
+    content: '',
+    isShowEmoji: false
   };
+
+  componentDidMount() {
+    this.emojiArray = ['😀', '🤣', '😄', '😁', '😅', '😊', '😋', '🤪', '🤐', '😷', '🤮'];
+    this.emojiArray = this.emojiArray.map((emojiValue) => ({ text: emojiValue }));
+  }
 
   handleSendMsg = () => {
     //collect data
@@ -20,7 +26,7 @@ class Chat extends Component {
       this.props.sendMsg({ from, to, content });
     }
     // clear msg in input
-    this.setState({ content: '' });
+    this.setState({ content: '', isShowEmoji: false });
 
     // load new msg
   };
@@ -68,10 +74,35 @@ class Chat extends Component {
         <div className="am-tab-bar">
           <InputItem
             onChange={(val) => this.setState({ content: val })}
+            onFocus={() => {
+              this.setState({ isShowEmoji: false });
+            }}
             value={this.state.content}
             placeholder="Write a message..."
-            extra={<span onClick={this.handleSendMsg}>Send</span>}
+            extra={
+              <div>
+                <span
+                  style={{ marginRight: 5 }}
+                  onClick={() => {
+                    this.setState({ isShowEmoji: !this.state.isShowEmoji });
+                  }}>
+                  😀
+                </span>
+                <b onClick={this.handleSendMsg}>Send</b>
+              </div>
+            }
           />
+          {this.state.isShowEmoji ? (
+            <Grid
+              data={this.emojiArray}
+              columnNum={4}
+              carouselMaxRow={3}
+              isCarousel={false}
+              onClick={(i) => {
+                this.setState({ content: this.state.content + i.text });
+              }}
+            />
+          ) : null}
         </div>
       </div>
     );
