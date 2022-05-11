@@ -163,7 +163,7 @@ async function getMsgList(dispatch, userid) {
 
 function initIO(dispatch, userid) {
   if (!io.socket) {
-    io.socket = io('wss://renego.live:4000');
+    io.socket = io('wss://localhost:4000');
 
     io.socket.on('connect_error', (err) => {
       console.log(`connect_error due to ${err.message}`);

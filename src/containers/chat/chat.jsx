@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavBar, List, InputItem, Grid } from 'antd-mobile';
+import { NavBar, Icon, List, InputItem, Grid } from 'antd-mobile';
 import { sendMsg } from '../../redux/actions';
 
 const Item = List.Item;
@@ -14,6 +14,14 @@ class Chat extends Component {
   componentDidMount() {
     this.emojiArray = ['😀', '🤣', '😄', '😁', '😅', '😊', '😋', '🤪', '🤐', '😷', '🤮'];
     this.emojiArray = this.emojiArray.map((emojiValue) => ({ text: emojiValue }));
+
+    //init msg list to bottom of list, so that user can see the lastest msg
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  componentDidUpdate() {
+    // scroll to the bottom after new msg sent or got
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   handleSendMsg = () => {
@@ -51,7 +59,18 @@ class Chat extends Component {
 
     return (
       <div id="chat-page">
-        <NavBar>{users[currentChatObjUserId].username}</NavBar>
+        <NavBar
+          icon={
+            <Icon
+              type="left"
+              onClick={() => {
+                this.props.history.goBack();
+              }}
+            />
+          }
+          className="header-fix">
+          {users[currentChatObjUserId].username}
+        </NavBar>
         <List>
           {currentMsgList.map((msg) => {
             // to me

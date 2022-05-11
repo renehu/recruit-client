@@ -31,5 +31,5 @@
     "eject": "react-scripts eject",
     "client": "serve build"
   },
-  "proxy": "https://renego.live:4000/"
+  "proxy": "https://localhost:4000/"
 }
