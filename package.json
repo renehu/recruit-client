@@ -31,5 +31,5 @@
     "eject": "react-scripts eject",
     "client": "serve build"
   },
-  "proxy": "https://localhost:4000/"
+  "proxy": "http://localhost:4000/"
 }

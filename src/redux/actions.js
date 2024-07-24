@@ -1,5 +1,5 @@
-import { func } from 'prop-types';
-import io from 'socket.io-client';
+import { func } from "prop-types";
+import io from "socket.io-client";
 
 import {
   reqRegister,
@@ -8,8 +8,8 @@ import {
   reqUser,
   reqUserList,
   reqMsgList,
-  reqMsgRead
-} from '../api';
+  reqMsgRead,
+} from "../api";
 
 import {
   AUTH_SUCCESS,
@@ -18,8 +18,8 @@ import {
   RESET_USER,
   USER_LIST_RECEIVED,
   MSG_RECEIVED,
-  MSG_LIST_RECEIVED
-} from './action-types';
+  MSG_LIST_RECEIVED,
+} from "./action-types";
 
 // dispatch actions
 
@@ -27,25 +27,28 @@ import {
 // auth success sync action
 const authSuccess = (user) => ({
   type: AUTH_SUCCESS,
-  data: user
+  data: user,
 });
 
 // error msg sync action
 const errorMsg = (msg) => ({
   type: ERROR_MSG,
-  data: msg
+  data: msg,
 });
 
 const userReceived = (user) => ({ type: USER_RECEIVED, data: user });
 
 export const resetUser = (msg) => ({ type: RESET_USER, data: msg });
 
-const userListReceived = (userList) => ({ type: USER_LIST_RECEIVED, data: userList });
+const userListReceived = (userList) => ({
+  type: USER_LIST_RECEIVED,
+  data: userList,
+});
 
 // chat msg sync action
 const msgListReceived = ({ users, chatMsgs }) => ({
   type: MSG_LIST_RECEIVED,
-  data: { users, chatMsgs }
+  data: { users, chatMsgs },
 });
 
 // receive singal msg
@@ -62,9 +65,9 @@ export const register = (user) => {
 
   if (password !== confirmPassword) {
     // error msg sync action
-    return errorMsg('The two passwords you entered did not match.');
+    return errorMsg("The two passwords you entered did not match.");
   } else if (!username) {
-    return errorMsg('The user name cannot be empty');
+    return errorMsg("The user name cannot be empty");
   }
 
   return async (dispatch) => {
@@ -90,9 +93,9 @@ export const login = (user) => {
 
   if (!username) {
     // error msg sync action
-    return errorMsg('Username cannot be empty.');
+    return errorMsg("Username cannot be empty.");
   } else if (!password) {
-    return errorMsg('Password cannot be empty.');
+    return errorMsg("Password cannot be empty.");
   }
 
   return async (dispatch) => {
@@ -163,14 +166,15 @@ async function getMsgList(dispatch, userid) {
 
 function initIO(dispatch, userid) {
   if (!io.socket) {
-    io.socket = io('wss://localhost:4000');
+    // io.socket = io('wss://localhost:4000');
+    io.socket = io("ws://localhost:4000");
 
-    io.socket.on('connect_error', (err) => {
+    io.socket.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
 
-    io.socket.on('receiveMsg', function (chatMsg) {
-      console.log('Client got msg from server', chatMsg);
+    io.socket.on("receiveMsg", function (chatMsg) {
+      console.log("Client got msg from server", chatMsg);
 
       // only chatMsg related to current user, then dispatch sync action to save msg
       if (userid == chatMsg.from || userid == chatMsg.to) {
@@ -182,7 +186,7 @@ function initIO(dispatch, userid) {
 
 export const sendMsg = ({ from, to, content }) => {
   return (dispatch) => {
-    console.log('Client send msg to Server', from, content, to);
-    io.socket.emit('sendMsg', { from, to, content });
+    console.log("Client send msg to Server", from, content, to);
+    io.socket.emit("sendMsg", { from, to, content });
   };
 };
