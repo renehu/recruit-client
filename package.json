@@ -15,12 +15,12 @@
     "react-router-dom": "^4.2.2",
     "redux": "^4.2.1",
     "redux-thunk": "^2.2.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.1.0",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
-    "less": "^2.7.3",
-    "less-loader": "^4.1.0",
     "react-scripts": "1.1.4",
     "redux-devtools-extension": "^2.13.2"
   },
