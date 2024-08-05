@@ -25,7 +25,7 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "react-app-rewired start --disable-host-check",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
