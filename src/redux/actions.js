@@ -166,8 +166,8 @@ async function getMsgList(dispatch, userid) {
 
 function initIO(dispatch, userid) {
   if (!io.socket) {
-    // io.socket = io('wss://localhost:4000');
-    io.socket = io("ws://localhost:4000");
+    io.socket = io("wss://recruit.renehu.net");
+    //io.socket = io("ws://localhost:4000");
 
     io.socket.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);

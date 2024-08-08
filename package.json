@@ -34,6 +34,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build -f"
   },
-  "proxy": "http://localhost:4000/",
+  "proxy": "https://recruit.renehu.net",
   "homepage": "https://renehu.github.io/recruit-client"
 }
