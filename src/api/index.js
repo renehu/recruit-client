@@ -16,7 +16,7 @@ export const reqRegister = (user) => ajax("/api/register", user, "POST");
 export const reqUpdateUser = (user) => ajax("/api/update", user, "POST");
 
 // GET method for get user
-export const reqUser = () => ajax("/api/user");
+export const reqUser = () => ajax(`${API_BASE_URL}/user`);
 
 // GET method for get user list
 export const reqUserList = (type) => ajax("/api/userlist", { type });
