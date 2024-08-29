@@ -1,56 +1,56 @@
 // main router component
-import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getUser } from '../../redux/actions';
-import Cookies from 'js-cookie';
-import { NavBar } from 'antd-mobile';
+import React, { Component } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { getUser } from "../../redux/actions";
+import Cookies from "js-cookie";
+import { NavBar } from "antd-mobile";
 
-import { getRedirectUrl } from '../../utils';
-import EmployeeInfo from '../employee-info/employee-info';
-import EmployerInfo from '../employer-info/employer-info';
-import Employee from '../employee/employee';
-import Employer from '../employer/employer';
-import Message from '../message/message';
-import Profile from '../profile/profile';
-import NotFound from '../../components/not-found/not-found';
-import FooterTabBar from '../../components/footer-tab-bar/footer-tab-bar';
-import Chat from '../chat/chat';
+import { getRedirectUrl } from "../../utils";
+import EmployeeInfo from "../employee-info/employee-info";
+import EmployerInfo from "../employer-info/employer-info";
+import Employee from "../employee/employee";
+import Employer from "../employer/employer";
+import Message from "../message/message";
+import Profile from "../profile/profile";
+import NotFound from "../../components/not-found/not-found";
+import FooterTabBar from "../../components/footer-tab-bar/footer-tab-bar";
+import Chat from "../chat/chat";
 
 class Main extends Component {
   navList = [
     {
-      path: '/employer',
+      path: "/employer",
       component: Employer,
-      title: 'Employee List',
-      icon: 'employee',
-      text: 'Employee'
+      title: "Employee List",
+      icon: "employee",
+      text: "Employee",
     },
     {
-      path: '/employee',
+      path: "/employee",
       component: Employee,
-      title: 'Employer List',
-      icon: 'employer',
-      text: 'Employer'
+      title: "Employer List",
+      icon: "employer",
+      text: "Employer",
     },
     {
-      path: '/message',
+      path: "/message",
       component: Message,
-      title: 'Message List',
-      icon: 'message',
-      text: 'Message'
+      title: "Message List",
+      icon: "message",
+      text: "Message",
     },
     {
-      path: '/profile',
+      path: "/profile",
       component: Profile,
-      title: 'Profile',
-      icon: 'profile',
-      text: 'Profile'
-    }
+      title: "Profile",
+      icon: "profile",
+      text: "Profile",
+    },
   ];
 
   componentDidMount() {
-    const userid = Cookies.get('userid');
+    const userid = Cookies.get("userid");
     const { _id } = this.props.user;
     // auto login
     if (userid && !_id) {
@@ -61,8 +61,10 @@ class Main extends Component {
 
   render() {
     // no cookie, return to login
-    const userid = Cookies.get('userid');
-    if (!userid) {
+    const userid = Cookies.get("userid");
+    const { _id } = this.props.user;
+
+    if (userid && !_id) {
       return <Redirect to="/login" />;
     }
 
@@ -73,7 +75,7 @@ class Main extends Component {
     } else {
       let url = this.props.location.pathname;
 
-      if (url === '/') {
+      if (url === "/") {
         url = getRedirectUrl(user.type, user.avatar);
         return <Redirect to={url} />;
       }
@@ -84,7 +86,7 @@ class Main extends Component {
     const nav = navList.find((nav) => nav.path === path);
 
     if (nav) {
-      if (user.type === 'employer') {
+      if (user.type === "employer") {
         // hide the employee menu if employer login
         navList[1].hide = true;
       } else {
