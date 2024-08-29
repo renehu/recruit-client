@@ -2,7 +2,8 @@
 
 import ajax from "./ajax";
 
-const API_BASE_URL = "https://recruit.renehu.net/api";
+//const API_BASE_URL = "https://recruit.renehu.net/api";
+const API_BASE_URL = "http://localhost:4000/api";
 
 /* User */
 // login

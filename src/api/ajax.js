@@ -15,8 +15,10 @@ export default function ajax(url, data = {}, type = "GET") {
       paramStr = paramStr.substring(0, paramStr.length - 1);
     }
 
-    return axios.get(url + "?" + paramStr, { withCredentials: true });
+    //return axios.get(url + "?" + paramStr, { withCredentials: true });
+    return axios.get(url + "?" + paramStr);
   } else {
-    return axios.post(url, data, { withCredentials: true });
+    //return axios.post(url, data, { withCredentials: true });
+    return axios.post(url, data);
   }
 }
