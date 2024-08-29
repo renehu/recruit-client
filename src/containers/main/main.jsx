@@ -64,7 +64,7 @@ class Main extends Component {
     const userid = Cookies.get("userid");
     const { _id } = this.props.user;
 
-    if (userid && !_id) {
+    if (!userid && !_id) {
       return <Redirect to="/login" />;
     }
 
